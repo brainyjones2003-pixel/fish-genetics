@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fish Genetics Explorer</title>
+
+    <style>
+        /* Overall website design */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #e3f2fd, #f5faff);
+            margin: 0;
+            padding: 40px 20px;
+            color: #263746;
+        }
+
+        /* Main heading */
+        h1 {
+            text-align: center;
+            color: #075985;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        /* Welcome message */
+        body > p {
+            text-align: center;
+            color: #526575;
+            font-size: 17px;
+            margin-bottom: 35px;
+        }
+
+        /* Calculator heading */
+        h2 {
+            text-align: center;
+            color: #0369a1;
+            margin-bottom: 30px;
+        }
+
+        /* Labels */
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #334155;
+        }
+
+        /* Number input boxes */
+        input[type="number"] {
+            display: block;              /* FIX: lets auto margins center it */
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            background-color: #ffffff;
+        }
+
+        input[type="number"]:focus {
+            outline: 2px solid #38bdf8;
+            border-color: #0284c7;
+        }
+
+        /* Calculate button */
+        button {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background-color: #0284c7;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0369a1;
+        }
+
+        /* Results box */
+        #result {
+            background-color: #ecfdf5;
+            border-left: 5px solid #10b981;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 25px;
+            line-height: 1.8;
+            color: #065f46;
+            font-weight: bold;
+            overflow-wrap: anywhere;
+        }
+
+        /* Hide the green box until there is a result */
+        #result:empty {
+            display: none;
+        }
+
+        /* Calculator column: same width and centering for everything */
+        h2,
+        label,
+        input,
+        button,
+        #result {
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Better appearance on mobile screens */
+        @media (max-width: 600px) {
+            body {
+                padding: 25px 16px;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Fish Genetics Explorer</h1>
+
+    <p>Welcome to my population genetics website!</p>
+
+    <h2>Allele Frequency Calculator</h2>
+
+    <label for="AA">Number of AA individuals:</label>
+    <input type="number" id="AA" value="40">
+
+    <label for="Aa">Number of Aa individuals:</label>
+    <input type="number" id="Aa" value="40">
+
+    <label for="aa">Number of aa individuals:</label>
+    <input type="number" id="aa" value="20">
+
+    <button onclick="calculate()">Calculate</button>
+
+    <p id="result"></p>
+
+    <script>
+        function calculate() {
+            let AA = Number(document.getElementById("AA").value);
+            let Aa = Number(document.getElementById("Aa").value);
+            let aa = Number(document.getElementById("aa").value);
+
+            let N = AA + Aa + aa;
+
+            if (N <= 0 || AA < 0 || Aa < 0 || aa < 0 ||
+                !Number.isInteger(AA) ||
+                !Number.isInteger(Aa) ||
+                !Number.isInteger(aa)) {
+                document.getElementById("result").innerHTML =
+                    "Please enter valid, non-negative whole-number counts.";
+                return;
+            }
+
+            let p = (2 * AA + Aa) / (2 * N);
+            let q = (2 * aa + Aa) / (2 * N);
+
+            document.getElementById("result").innerHTML =
+                "Allele A frequency (p): " + p.toFixed(3) +
+                "<br>Allele a frequency (q): " + q.toFixed(3) +
+                "<br>Total: " + (p + q).toFixed(3);
+        }
+    </script>
+</body>
+</html>
